@@ -1,5 +1,4 @@
 export class BeerSlider {
-
     constructor (element, {start = '50', prefix = 'beer'} = {}) {
         this.start = parseInt(start) ? Math.min(100, Math.max(0, parseInt(start))) : 50
         this.prefix = prefix
@@ -28,6 +27,10 @@ export class BeerSlider {
         })
         this.onImagesLoad()
     }
+    destroy() {
+      this.element.removeChild(this.range)
+      this.element.removeChild(this.handle)
+    }
     init () {
         this.element.classList.add(`${this.prefix}-ready`)
         this.setImgWidth()
@@ -54,7 +57,7 @@ export class BeerSlider {
         if ( !this.revealElement ) {
             return
         }
-        this.loadedBoth().then( 
+        this.loadedBoth().then(
             () => {
                 this.init()
             },
@@ -62,7 +65,7 @@ export class BeerSlider {
                 console.error('Some errors occurred and images are not loaded.')
             }
         )
-    } 
+    }
     addElement (tag, attributes) {
         const el = document.createElement(tag)
         Object.keys(attributes).forEach( (key) => {
